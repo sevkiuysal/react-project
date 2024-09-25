@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.uysalsevki.reactproject.dto.CreatePostRequest;
+import com.uysalsevki.reactproject.dto.PostResponse;
 import com.uysalsevki.reactproject.dto.UpdatePostRequest;
 import com.uysalsevki.reactproject.entities.Post;
-import com.uysalsevki.reactproject.repository.PostRepository;
 import com.uysalsevki.reactproject.service.PostService;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -33,7 +33,7 @@ public class PostController {
 
 
 	@GetMapping
-	public List<Post> getAllPosts(@RequestParam Optional<Long> userId){
+	public List<PostResponse> getAllPosts(@RequestParam Optional<Long> userId){
 		return postService.getAllPosts(userId);
 	}
 	

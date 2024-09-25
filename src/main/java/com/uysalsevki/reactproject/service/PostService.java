@@ -5,7 +5,9 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.uysalsevki.reactproject.convert.PostConverter;
 import com.uysalsevki.reactproject.dto.CreatePostRequest;
+import com.uysalsevki.reactproject.dto.PostResponse;
 import com.uysalsevki.reactproject.dto.UpdatePostRequest;
 import com.uysalsevki.reactproject.entities.Post;
 import com.uysalsevki.reactproject.entities.User;
@@ -17,17 +19,23 @@ public class PostService {
 	private PostRepository postRepository;
 	
 	private UserService userService;
+	
+	private PostConverter postConverter;
 
-	public PostService(PostRepository postRepository,UserService userService) {
+	public PostService(PostRepository postRepository, UserService userService, PostConverter postConverter) {
 		this.postRepository = postRepository;
 		this.userService = userService;
+		this.postConverter = postConverter;
 	}
 
-	public List<Post> getAllPosts(Optional<Long> userId) {
+	public List<PostResponse> getAllPosts(Optional<Long> userId) {
+		
 		if(userId.isPresent()) {
-			return postRepository.findByUserId(userId.get());
-		}
-		return postRepository.findAll();
+			return postConverter.ToPostResponseList(
+					postRepository.findByUserId(userId.get())
+					);
+		}else
+		return postConverter.ToPostResponseList(postRepository.findAll());
 	}
 
 	public Post getPostById(Long postId) {
