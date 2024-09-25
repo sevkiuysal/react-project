@@ -20,10 +20,9 @@ public class Post {
 	@Id
 	private Long id;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="user_id",nullable = false)
 	@OnDelete(action = OnDeleteAction.CASCADE)	//when a user is deleted, all their posts will be deleted
-	@JsonIgnore
 	private User user;
 	
 	private String title;
